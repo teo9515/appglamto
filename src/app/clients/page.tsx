@@ -101,7 +101,7 @@ export default function Clients() {
           </span>
         </div>
 
-        <div className="w-full flex flex-col md:flex-row justify-between items-center gap-2">
+        <div className="w-5/6 flex flex-col md:flex-row justify-between items-center gap-2">
           <button
             className="btn-primary w-full md:w-auto"
             onClick={handleOpenModal}
