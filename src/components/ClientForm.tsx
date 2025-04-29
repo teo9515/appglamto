@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 import { Client, Cat } from "@/types";
@@ -15,12 +15,12 @@ type ClientFormProps = {
 export default function ClientForm({
   client: initialClient,
   cats: initialCats,
-  isEditing,
+  isEditing = false,
   onSuccess,
 }: ClientFormProps) {
   const router = useRouter();
 
-  const [client, setClient] = useState({
+  const [client, setClient] = useState<Client>({
     name: "",
     phone: "",
     address: "",
@@ -30,14 +30,18 @@ export default function ClientForm({
     photo_permission: false,
   });
 
-  const [cats, setCats] = useState([
+  const [cats, setCats] = useState<Cat[]>([
     { name: "", age: "", medical_condition: "" },
   ]);
 
   useEffect(() => {
     if (isEditing && initialClient) {
       setClient(initialClient);
-      setCats(initialCats?.length ? initialCats : []);
+      setCats(
+        initialCats?.length
+          ? initialCats
+          : [{ name: "", age: "", medical_condition: "" }]
+      );
     }
   }, [isEditing, initialClient, initialCats]);
 
@@ -52,17 +56,16 @@ export default function ClientForm({
   ) => {
     const { name, value } = e.target;
     const newCats = [...cats];
-    newCats[index][name as keyof (typeof newCats)[number]] = value;
+    newCats[index] = { ...newCats[index], [name]: value };
     setCats(newCats);
   };
 
-  const addCat = () => {
-    setCats([...cats, { name: "", age: "", medical_condition: "" }]);
-  };
+  const addCat = useCallback(() => {
+    setCats((prev) => [...prev, { name: "", age: "", medical_condition: "" }]);
+  }, []);
 
   const removeCat = (index: number) => {
-    const newCats = cats.filter((_, i) => i !== index);
-    setCats(newCats);
+    setCats((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -88,7 +91,7 @@ export default function ClientForm({
     }
 
     if (clientError) {
-      alert("Error al guardar cliente: " + clientError.message);
+      alert("❌ Error al guardar cliente: " + clientError.message);
       return;
     }
 
@@ -105,12 +108,12 @@ export default function ClientForm({
 
     if (catError) {
       alert(
-        "Cliente guardado, pero error al guardar gatos: " + catError.message
+        "⚠️ Cliente guardado, pero error al guardar gatos: " + catError.message
       );
     } else {
       if (onSuccess) {
-        router.refresh(); // actualiza lista si estamos en misma página
-        onSuccess(); // ✅ cierra el modal
+        router.refresh();
+        onSuccess();
       } else {
         router.push("/clients");
       }
@@ -118,14 +121,16 @@ export default function ClientForm({
   };
 
   const handleDelete = async () => {
-    const confirm = window.confirm("¿Estás seguro de eliminar este cliente?");
-    if (!confirm) return;
+    if (!initialClient?.id) return;
 
-    if (initialClient?.id) {
-      await supabase.from("cats").delete().eq("client_id", initialClient.id);
-      await supabase.from("clients").delete().eq("id", initialClient.id);
-      router.push("/clients");
-    }
+    const confirmDelete = window.confirm(
+      "¿Estás seguro de eliminar este cliente y sus gatos?"
+    );
+    if (!confirmDelete) return;
+
+    await supabase.from("cats").delete().eq("client_id", initialClient.id);
+    await supabase.from("clients").delete().eq("id", initialClient.id);
+    router.push("/clients");
   };
 
   return (
@@ -245,7 +250,7 @@ export default function ClientForm({
         + Añadir otro gato
       </button>
 
-      <div className="flex gap-4">
+      <div className="flex gap-4 pt-4">
         <button
           type="submit"
           className="bg-[#304D30] text-white px-4 py-2 rounded hover:bg-green-700"

@@ -35,18 +35,18 @@ export default function Clients() {
   useEffect(() => {
     const fetchClients = async () => {
       const { data, error } = await supabase.from("clients").select(`
-        id,
-        name,
-        phone,
-        address,
-        email,
-        cats (
           id,
           name,
-          age,
-          medical_condition
-        )
-      `);
+          phone,
+          address,
+          email,
+          cats (
+            id,
+            name,
+            age,
+            medical_condition
+          )
+        `);
 
       if (error) {
         setError(error.message);
@@ -91,59 +91,55 @@ export default function Clients() {
 
   return (
     <div className="h-full w-full p-4 flex flex-col">
-      <div className="w-full flex justify-around ">
-        <h1 className="text-3xl font-bold text-[rgb(22,48,32)]">
-          Clientes registrados
+      <div className="w-full flex flex-col items-center gap-6">
+        <div className="w-full flex items-center justify-center">
+          <h1 className="text-3xl font-bold text-[rgb(22,48,32)]">
+            Clientes registrados
+          </h1>
           <span className="ml-2 text-xl font-normal text-gray-600">
             ({clients.length} total)
           </span>
-        </h1>
+        </div>
 
         <div className="space-x-4 w-10/12 flex justify-between h-full">
-          <button
-            className="bg-[#163020] text-white w-40 p-4 text-center rounded-xl transition hover:bg-[#2c4a1c]"
-            onClick={handleOpenModal}
-          >
+          <button className="btn-primary" onClick={handleOpenModal}>
             Nuevo cliente
           </button>
 
-          <Link
-            href="/"
-            className="bg-[#163020] text-white w-40 p-4 text-center rounded-xl transition hover:bg-[#2c4a1c]"
-          >
-            Home
+          <Link href="/">
+            <button className="btn-secondary">Home</button>
           </Link>
-          <input
-            type="text"
-            placeholder="Buscar por nombre..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="mb-4 w-full md:w-1/2 p-2 border border-gray-300 rounded-md"
-          />
         </div>
+        <input
+          type="text"
+          placeholder="Buscar por nombre..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="mb-4 w-full md:w-1/2 p-2 border border-gray-300 rounded-md"
+        />
       </div>
 
       {filteredClients.length === 0 ? (
         <p>No hay clientes aún.</p>
       ) : (
         <div className="border border-gray-300 rounded-lg overflow-hidden shadow-sm">
-          <div className="overflow-y-auto max-h-[500px]">
+          <div className="overflow-y-auto max-h-[600px] lg:max-h-[500px]">
             <table className="w-full table-auto border-collapse text-sm">
               <thead className="bg-[#dbe3b6] text-[#163020] sticky top-0 z-10">
                 <tr>
-                  <th className="p-2 border border-gray-300 text-left">
+                  <th className="p-2 border border-gray-300 text-center">
                     Nombre
                   </th>
-                  <th className="p-2 border border-gray-300 text-left">
+                  <th className="p-2 border border-gray-300 text-center">
                     Dirección
                   </th>
-                  <th className="p-2 border border-gray-300 text-left">
+                  <th className="p-2 border border-gray-300 text-center">
                     Teléfono
                   </th>
-                  <th className="p-2 border border-gray-300 text-left">
+                  <th className="p-2 border border-gray-300 text-center">
                     Gatos
                   </th>
-                  <th className="p-2 border border-gray-300 text-left">
+                  <th className="p-2 border border-gray-300 text-center">
                     Acciones
                   </th>
                 </tr>
@@ -165,7 +161,7 @@ export default function Clients() {
                     </td>
                     <td className="p-2 border border-gray-200">
                       {client.cats.length === 0 ? (
-                        <span className="italic text-gray-500">Sin gatos</span>
+                        <span className="italic text-gray-500">—</span>
                       ) : (
                         <ul className="list-disc pl-4 space-y-1">
                           {client.cats.map((cat) => (

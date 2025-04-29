@@ -1,2 +1,18 @@
 @import "tailwindcss";
 
+@layer components {
+    .btn-primary {
+      @apply  bg-[#AEBD77] font-medium text-black  w-40 h-12 text-xl hover:border-white hover:cursor-pointer hover:text-white hover:bg-[#163020] rounded-lg shadow-black shadow-[7.0px_7.0px_8.0px_rgba(0,0,0,0.38)];
+    }
+    .btn-secondary {
+      @apply  bg-[#163020]  font-medium text-white  w-40 h-12 text-xl hover:border-white hover:text-black hover:cursor-pointer hover:bg-[#AEBD77] rounded-lg shadow-black shadow-[7.0px_7.0px_8.0px_rgba(0,0,0,0.38)]
+    }
+    
+  }
+
+  .main-background {
+    background-color: #8E806A;
+    background-size: cover;
+    background-position: center;
+  }
+  
