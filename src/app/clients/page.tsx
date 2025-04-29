@@ -91,107 +91,104 @@ export default function Clients() {
 
   return (
     <div className="h-full w-full p-4 flex flex-col">
-      <div className="w-full flex flex-col items-center gap-6">
-        <div className="w-full flex items-center justify-center">
-          <h1 className="text-3xl font-bold text-[rgb(22,48,32)]">
+      <div className="w-full flex flex-col gap-4 items-center md:items-start md:gap-6">
+        <div className="w-full flex flex-col md:flex-row md:justify-between items-center gap-2">
+          <h1 className="text-2xl md:text-3xl font-bold text-[rgb(22,48,32)] text-center md:text-left">
             Clientes registrados
           </h1>
-          <span className="ml-2 text-xl font-normal text-gray-600">
+          <span className="text-lg text-gray-600">
             ({clients.length} total)
           </span>
         </div>
 
-        <div className="space-x-4 w-10/12 flex justify-between h-full">
-          <button className="btn-primary" onClick={handleOpenModal}>
+        <div className="w-full flex flex-col md:flex-row justify-between items-center gap-2">
+          <button
+            className="btn-primary w-full md:w-auto"
+            onClick={handleOpenModal}
+          >
             Nuevo cliente
           </button>
-
-          <Link href="/">
-            <button className="btn-secondary">Home</button>
+          <Link href="/" className="w-full md:w-auto">
+            <button className="btn-secondary w-full md:w-auto">Home</button>
           </Link>
         </div>
+
         <input
           type="text"
           placeholder="Buscar por nombre..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="mb-4 w-full md:w-1/2 p-2 border border-gray-300 rounded-md"
+          className="w-full md:w-1/2 p-2 border border-gray-300 rounded-md"
         />
       </div>
 
       {filteredClients.length === 0 ? (
-        <p>No hay clientes aún.</p>
+        <p className="mt-6 text-center text-gray-500">No hay clientes aún.</p>
       ) : (
-        <div className="border border-gray-300 rounded-lg overflow-hidden shadow-sm">
-          <div className="overflow-y-auto max-h-[600px] lg:max-h-[500px]">
-            <table className="w-full table-auto border-collapse text-sm">
-              <thead className="bg-[#dbe3b6] text-[#163020] sticky top-0 z-10">
-                <tr>
-                  <th className="p-2 border border-gray-300 text-center">
-                    Nombre
-                  </th>
-                  <th className="p-2 border border-gray-300 text-center">
-                    Dirección
-                  </th>
-                  <th className="p-2 border border-gray-300 text-center">
-                    Teléfono
-                  </th>
-                  <th className="p-2 border border-gray-300 text-center">
-                    Gatos
-                  </th>
-                  <th className="p-2 border border-gray-300 text-center">
-                    Acciones
-                  </th>
+        <div className="mt-6 max-h-[60vh] sm:max-h-[65vh] md:max-h-[70vh] lg:max-h-[75vh] overflow-y-auto overflow-x-auto border border-gray-200 rounded-lg shadow-sm">
+          <table className="min-w-full table-auto border-collapse text-sm">
+            <thead className="bg-[#dbe3b6] text-[#163020] sticky top-0 z-10">
+              <tr>
+                <th className="p-3 border border-gray-300 text-left">Nombre</th>
+                <th className="p-3 border border-gray-300 text-left">
+                  Dirección
+                </th>
+                <th className="p-3 border border-gray-300 text-left">
+                  Teléfono
+                </th>
+                <th className="p-3 border border-gray-300 text-left">Gatos</th>
+                <th className="p-3 border border-gray-300 text-center">
+                  Acciones
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredClients.map((client) => (
+                <tr
+                  key={client.id}
+                  className="hover:bg-[#f8fbe6] transition text-[#2f3e2e]"
+                >
+                  <td className="p-3 border border-gray-200 font-medium">
+                    {client.name}
+                  </td>
+                  <td className="p-3 border border-gray-200">
+                    {client.address || "No especificada"}
+                  </td>
+                  <td className="p-3 border border-gray-200">
+                    {client.phone || "No especificado"}
+                  </td>
+                  <td className="p-3 border border-gray-200">
+                    {client.cats.length === 0 ? (
+                      <span className="italic text-gray-500">—</span>
+                    ) : (
+                      <ul className="list-disc pl-4 space-y-1">
+                        {client.cats.map((cat) => (
+                          <li key={cat.id}>
+                            {cat.name}
+                            {cat.age && ` (${cat.age} años)`}
+                            {cat.medical_condition && (
+                              <span className="text-red-500 text-xs">
+                                {" "}
+                                - {cat.medical_condition}
+                              </span>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </td>
+                  <td className="p-3 border border-gray-200 text-center">
+                    <button
+                      onClick={() => handleDelete(client.id)}
+                      className="text-red-600 hover:underline"
+                    >
+                      Eliminar
+                    </button>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {filteredClients.map((client) => (
-                  <tr
-                    key={client.id}
-                    className="hover:bg-[#f8fbe6] transition text-[#2f3e2e]"
-                  >
-                    <td className="p-2 border border-gray-200 font-medium">
-                      {client.name}
-                    </td>
-                    <td className="p-2 border border-gray-200">
-                      {client.address || "No especificada"}
-                    </td>
-                    <td className="p-2 border border-gray-200">
-                      {client.phone || "No especificado"}
-                    </td>
-                    <td className="p-2 border border-gray-200">
-                      {client.cats.length === 0 ? (
-                        <span className="italic text-gray-500">—</span>
-                      ) : (
-                        <ul className="list-disc pl-4 space-y-1">
-                          {client.cats.map((cat) => (
-                            <li key={cat.id}>
-                              {cat.name}
-                              {cat.age && ` (${cat.age} años)`}
-                              {cat.medical_condition && (
-                                <span className="text-red-500 text-xs">
-                                  {" "}
-                                  - {cat.medical_condition}
-                                </span>
-                              )}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </td>
-                    <td className="p-2 border border-gray-200">
-                      <button
-                        onClick={() => handleDelete(client.id)}
-                        className="text-red-600 hover:underline"
-                      >
-                        Eliminar
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
 
