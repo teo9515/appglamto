@@ -90,7 +90,7 @@ export default function Clients() {
   if (error) return <p className="p-4 text-red-500">Error: {error}</p>;
 
   return (
-    <div className="h-full w-full p-4 flex flex-col">
+    <div className="h-full w-full p-4 flex flex-col bg-green-300">
       <div className="w-full flex justify-around ">
         <h1 className="text-3xl font-bold text-[rgb(22,48,32)]">
           Clientes registrados
