@@ -22,7 +22,7 @@ type Client = {
   cats: Cat[];
 };
 
-const CLIENTS_PER_PAGE = 10;
+const CLIENTS_PER_PAGE = 5;
 
 export default function Clients() {
   const [clients, setClients] = useState<Client[]>([]);
@@ -100,8 +100,8 @@ export default function Clients() {
   if (error) return <p className="p-4 text-red-500">Error: {error}</p>;
 
   return (
-    <div className="h-full w-full p-4 flex flex-col overflow-hidden">
-      <div className="w-full flex flex-col gap-4 items-center md:items-start lg:items-center md:gap-6 lg:flex-row">
+    <div className="h-full w-full  p-4 flex flex-col overflow-hidden">
+      <div className="w-full flex flex-col gap-7 items-center md:items-start lg:items-center md:gap-6 lg:flex-row">
         <div className="w-full flex flex-col md:flex-row items-center gap-3">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[rgb(22,48,32)] text-center md:text-left">
             Clientes registrados
@@ -115,7 +115,10 @@ export default function Clients() {
           <button className="btn-primary" onClick={handleOpenModal}>
             Nuevo cliente
           </button>
-          <Link href="/" className="btn-secondary">
+          <Link
+            href="/"
+            className="btn-secondary flex justify-center items-center hover:cursor-pointer"
+          >
             <button className="cursor-pointer">Home</button>
           </Link>
         </div>
@@ -125,7 +128,7 @@ export default function Clients() {
           placeholder="Buscar por nombre..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full md:w-1/2 p-2 border border-gray-300 rounded-md"
+          className="w-full md:w-1/2 p-2  shadow-md shadow-black rounded-md "
         />
       </div>
 
@@ -137,19 +140,19 @@ export default function Clients() {
             <table className="min-w-full table-auto border-collapse text-sm">
               <thead className="bg-[#dbe3b6] text-[#163020] sticky top-0 z-10">
                 <tr>
-                  <th className="p-3 border border-gray-300 text-left">
+                  <th className="p-3 border border-gray-300 text-left w-1/6">
                     Nombre
                   </th>
-                  <th className="p-3 border border-gray-300 text-left">
+                  <th className="p-3 border border-gray-300 text-left w-3/6">
                     Dirección
                   </th>
-                  <th className="p-3 border border-gray-300 text-left">
+                  <th className="p-3 border border-gray-300 text-left w-1/12">
                     Teléfono
                   </th>
                   <th className="p-3 border border-gray-300 text-left">
                     Gatos
                   </th>
-                  <th className="p-3 border border-gray-300 text-center">
+                  <th className="p-3 border border-gray-300 text-center w-1/12">
                     Acciones
                   </th>
                 </tr>
@@ -158,7 +161,7 @@ export default function Clients() {
                 {paginatedClients.map((client) => (
                   <tr
                     key={client.id}
-                    className="hover:bg-[#f8fbe6] transition text-[#2f3e2e]"
+                    className="hover:bg-[#f8fbe6] transition text-[#2f3e2e] "
                   >
                     <td className="p-3 border border-gray-200 font-medium">
                       {client.name}
@@ -220,7 +223,7 @@ export default function Clients() {
               <button
                 key={i}
                 onClick={() => setCurrentPage(i + 1)}
-                className={`px-3 py-1 rounded-md ${
+                className={`px-3 py-1 rounded-md cursor-pointer ${
                   currentPage === i + 1
                     ? "bg-[#304d30] text-white"
                     : "bg-gray-200 text-gray-800"
