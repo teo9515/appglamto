@@ -10,9 +10,6 @@
     
   }
 
-  .main-background {
-    background-color: #8E806A;
-    background-size: cover;
-    background-position: center;
+  body {
+    @apply bg-[#F7F7F7];
   }
-  
