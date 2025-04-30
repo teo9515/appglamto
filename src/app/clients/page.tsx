@@ -91,25 +91,25 @@ export default function Clients() {
 
   return (
     <div className="h-full w-full p-4 flex flex-col">
-      <div className="w-full flex flex-col gap-4 items-center md:items-start md:gap-6">
-        <div className="w-full flex flex-col md:flex-row md:justify-between items-center gap-2">
-          <h1 className="text-2xl md:text-3xl font-bold text-[rgb(22,48,32)] text-center md:text-left">
+      <div className="w-full flex flex-col gap-4 items-center md:items-start lg:items-center md:gap-6 lg:flex-row">
+        <div className="w-full flex flex-col md:flex-row  items-center gap-3">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[rgb(22,48,32)] text-center md:text-left ">
             Clientes registrados
           </h1>
-          <span className="text-lg text-gray-600">
+          <span className="text-lg text-gray-700 text-center">
             ({clients.length} total)
           </span>
         </div>
 
-        <div className="w-5/6 flex flex-col md:flex-row justify-between items-center gap-2">
-          <button
-            className="btn-primary w-full md:w-auto"
-            onClick={handleOpenModal}
-          >
+        <div className="w-5/6  flex flex-col sm:flex-row  items-center space-y-4 sm:space-y-0 sm:space-x-5">
+          <button className="btn-primary " onClick={handleOpenModal}>
             Nuevo cliente
           </button>
-          <Link href="/" className="w-full md:w-auto">
-            <button className="btn-secondary w-full md:w-auto">Home</button>
+          <Link
+            href="/"
+            className="btn-secondary flex justify-center items-center"
+          >
+            <button className="cursor-pointer">Home</button>
           </Link>
         </div>
 

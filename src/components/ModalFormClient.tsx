@@ -29,7 +29,7 @@ export default function ModalFormClient({
           >
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 text-gray-500 hover:text-black"
+              className="absolute top-4 right-4 text-gray-500 font-bold w-10 h-10 hover:text-black"
               aria-label="Cerrar modal"
             >
               <span aria-hidden="true">✕</span>

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
+import Link from "next/link";
 
 type Visit = {
   id: string;
@@ -139,7 +140,9 @@ export default function FinanzasPage() {
 
   const renderTabla = (lista: Guarderia[], titulo: string) => (
     <div className="mb-12">
-      <h2 className="text-xl font-semibold mb-2">{titulo}</h2>
+      <div>
+        <h2 className="text-xl font-semibold mb-2">{titulo}</h2>
+      </div>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-300 rounded shadow">
           <thead className="bg-gray-100">
@@ -247,7 +250,12 @@ export default function FinanzasPage() {
 
   return (
     <div className="max-w-7xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-6">Resumen financiero</h1>
+      <div className="flex">
+        <h1 className="text-2xl font-bold mb-6">Resumen financiero</h1>
+        <Link href="/" className="btn-primary flex justify-center items-center">
+          <button>Home</button>
+        </Link>
+      </div>
       {notificacion && (
         <div className="mb-4 p-3 bg-green-100 border border-green-300 text-green-800 rounded">
           {notificacion}

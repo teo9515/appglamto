@@ -138,7 +138,7 @@ export default function ClientForm({
       onSubmit={handleSubmit}
       className="space-y-6 max-w-2xl mx-auto p-6 bg-white rounded shadow"
     >
-      <h2 className="text-2xl font-bold text-[#163020]">
+      <h2 className="text-2xl font-bold text-[#163020] ">
         {isEditing ? "Editar Cliente" : "Registrar Cliente"}
       </h2>
 
@@ -196,12 +196,14 @@ export default function ClientForm({
           checked={client.photo_permission}
           onChange={handleClientChange}
         />
-        <span>¿Autoriza fotos y publicación en redes?</span>
+        <span className="font-semibold">
+          ¿Autoriza fotos y publicación en redes?
+        </span>
       </label>
 
       <hr />
 
-      <h3 className="text-xl font-semibold text-[#163020]">Gatos</h3>
+      <h3 className="text-xl font-semibold text-[rgb(22,48,32)] ">Gatos</h3>
 
       {cats.map((cat, index) => (
         <div
@@ -234,7 +236,7 @@ export default function ClientForm({
             <button
               type="button"
               onClick={() => removeCat(index)}
-              className="text-red-500 absolute top-2 right-2"
+              className="text-red-600 absolute -top-6.5 right-2"
             >
               Quitar
             </button>
@@ -245,17 +247,14 @@ export default function ClientForm({
       <button
         type="button"
         onClick={addCat}
-        className="text-sm text-[#163020] hover:underline"
+        className="text-md font-semibold text-[#163020] hover:underline"
       >
         + Añadir otro gato
       </button>
 
-      <div className="flex gap-4 pt-4">
-        <button
-          type="submit"
-          className="bg-[#304D30] text-white px-4 py-2 rounded hover:bg-green-700"
-        >
-          {isEditing ? "Actualizar Cliente" : "Guardar Cliente y Gatos"}
+      <div className="text-center">
+        <button type="submit" className="btn-primary">
+          {isEditing ? "Actualizar Cliente" : "Guardar cliente y gatos"}
         </button>
 
         {isEditing && (

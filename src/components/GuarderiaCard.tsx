@@ -66,7 +66,7 @@ export default function GuarderiaCard({
           </span>
           <button
             onClick={() => setExpanded(!expanded)}
-            className="text-sm text-blue-600 hover:underline transition"
+            className="text-sm text-blue-600 hover:underline transition cursor-pointer"
           >
             {expanded ? "▲ Ocultar" : "▼ Mostrar"}
           </button>
@@ -104,7 +104,7 @@ export default function GuarderiaCard({
 
           <button
             onClick={() => onDelete(id)}
-            className="text-red-600 text-sm hover:underline mt-2"
+            className="text-red-600 text-sm hover:underline mt-2 cursor-pointer"
           >
             Eliminar guardería
           </button>

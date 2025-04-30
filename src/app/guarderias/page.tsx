@@ -90,26 +90,27 @@ export default function GuarderiasPage() {
   );
 
   return (
-    <div className="max-w-5xl mx-auto p-4 space-y-6">
-      <div className="flex flex-wrap gap-5 items-center justify-center">
+    <div className="max-w-4xl py-10 mx-auto p-4 space-y-8 md:space-y-8">
+      <div className="flex flex-wrap gap-5 items-center justify-center space-y-5">
         <h1 className="text-5xl font-bold text-[#163020] text-center">
           Guarderías
         </h1>
 
-        <div className="flex flex-col gap-4 w-5/6">
-          <button
-            className="btn-primary w-full md:w-auto"
-            onClick={handleOpenModal}
-          >
+        <div className="w-full  flex flex-col sm:flex-row  items-center space-y-4 sm:space-y-0 sm:space-x-5 mb-5 md:mb-3">
+          <button className="btn-primary " onClick={handleOpenModal}>
             Nueva guarderia
           </button>
-          <Link href="/guarderias/finanza">
-            <button className="btn-secondary w-full md:w-auto">
-              Finanzas guardería
-            </button>
+          <Link
+            href="/guarderias/finanza"
+            className="btn-secondary flex justify-center items-center hover:cursor-pointer"
+          >
+            <button className="cursor-pointer">Finanzas guardería</button>
           </Link>
-          <Link href="/">
-            <button className="btn-primary w-full md:w-auto">Home</button>
+          <Link
+            href="/"
+            className="btn-primary flex justify-center items-center"
+          >
+            <button className="cursor-pointer">Home</button>
           </Link>
         </div>
       </div>
