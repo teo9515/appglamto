@@ -138,112 +138,99 @@ export default function FinanzasPage() {
     })
   );
 
-  const renderTabla = (lista: Guarderia[], titulo: string) => (
+  const renderTarjetas = (lista: Guarderia[], titulo: string) => (
     <div className="mb-12">
-      <div>
-        <h2 className="text-xl font-semibold mb-2">{titulo}</h2>
-      </div>
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border border-gray-300 rounded shadow">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="p-2 border">Cliente</th>
-              <th className="p-2 border"># Visitas</th>
-              <th className="p-2 border"># Gatos</th>
-              <th className="p-2 border">Valor por visita</th>
-              <th className="p-2 border">Total</th>
-              <th className="p-2 border">10% Gasolina</th>
-              <th className="p-2 border">40% Cuidador</th>
-              <th className="p-2 border">50% Glamto</th>
-              <th className="p-2 border">Abono</th>
-              <th className="p-2 border">Saldo Pendiente</th>
-              <th className="p-2 border">Deuda</th>
-              <th className="p-2 border">Estado</th>
-            </tr>
-          </thead>
-          <tbody>
-            {lista.map((guarderia) => {
-              const numGatos = guarderia.clients?.cats?.length || 0;
-              const precioPorVisita = calcularPrecio(numGatos);
-              const visitas = guarderia.guarderias_visits || [];
-              const total = visitas.length * precioPorVisita;
-              const gasolina = total * 0.1;
-              const cuidador = total * 0.4;
-              const glamto = total * 0.5;
-              const totalAbonado = calcularTotalAbonado(guarderia.id);
-              const saldoPendiente = total - totalAbonado;
-              const sinDeuda = saldoPendiente === 0;
+      <h2 className="text-xl font-semibold mb-2">{titulo}</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {lista.map((guarderia) => {
+          const numGatos = guarderia.clients?.cats?.length || 0;
+          const precioPorVisita = calcularPrecio(numGatos);
+          const visitas = guarderia.guarderias_visits || [];
+          const total = visitas.length * precioPorVisita;
+          const gasolina = total * 0.1;
+          const cuidador = total * 0.4;
+          const glamto = total * 0.5;
+          const totalAbonado = calcularTotalAbonado(guarderia.id);
+          const saldoPendiente = total - totalAbonado;
+          const sinDeuda = saldoPendiente === 0;
 
-              const isCompleted = visitas.every((visit) => {
-                const visitDate = new Date(`${visit.date}`);
-                return visitDate < today;
-              });
+          const isCompleted = visitas.every((visit) => {
+            const visitDate = new Date(`${visit.date}`);
+            return visitDate < today;
+          });
 
-              return (
-                <tr key={guarderia.id}>
-                  <td className="p-2 border">{guarderia.clients?.name}</td>
-                  <td className="p-2 border text-center">{visitas.length}</td>
-                  <td className="p-2 border text-center">{numGatos}</td>
-                  <td className="p-2 border text-center">
-                    {COP.format(precioPorVisita)}
-                  </td>
-                  <td className="p-2 border text-center font-semibold">
-                    {COP.format(total)}
-                  </td>
-                  <td className="p-2 border text-center text-blue-700">
-                    {COP.format(gasolina)}
-                  </td>
-                  <td className="p-2 border text-center text-green-700">
-                    {COP.format(cuidador)}
-                  </td>
-                  <td className="p-2 border text-center text-pink-700">
-                    {COP.format(glamto)}
-                  </td>
-                  <td className="p-2 border text-center font-semibold">
-                    <input
-                      type="number"
-                      value={nuevoAbonos[guarderia.id] || ""}
-                      onChange={(e) =>
-                        setNuevoAbonos((prev) => ({
-                          ...prev,
-                          [guarderia.id]: Number(e.target.value),
-                        }))
+          return (
+            <div
+              key={guarderia.id}
+              className="bg-white border rounded-lg shadow-md p-4"
+            >
+              <h3 className="font-bold text-lg">{guarderia.clients?.name}</h3>
+              <p className="text-sm text-gray-600">
+                {guarderia.clients?.cats?.map((cat) => cat.name).join(", ")}
+              </p>
+              <div className="mt-4">
+                <p>
+                  <strong>Visitas:</strong> {visitas.length}
+                </p>
+                <p>
+                  <strong>Gatos:</strong> {numGatos}
+                </p>
+                <p>
+                  <strong>Valor por visita:</strong>{" "}
+                  {COP.format(precioPorVisita)}
+                </p>
+                <p>
+                  <strong>Total:</strong> {COP.format(total)}
+                </p>
+                <p>
+                  <strong>10% Gasolina:</strong> {COP.format(gasolina)}
+                </p>
+                <p>
+                  <strong>40% Cuidador:</strong> {COP.format(cuidador)}
+                </p>
+                <p>
+                  <strong>50% Glamto:</strong> {COP.format(glamto)}
+                </p>
+                <p>
+                  <strong>Abono:</strong>
+                  <input
+                    type="number"
+                    value={nuevoAbonos[guarderia.id] || ""}
+                    onChange={(e) =>
+                      setNuevoAbonos((prev) => ({
+                        ...prev,
+                        [guarderia.id]: Number(e.target.value),
+                      }))
+                    }
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        agregarAbono(
+                          guarderia.id,
+                          nuevoAbonos[guarderia.id] || 0
+                        );
                       }
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                          e.preventDefault();
-                          agregarAbono(
-                            guarderia.id,
-                            nuevoAbonos[guarderia.id] || 0
-                          );
-                        }
-                      }}
-                      placeholder="$"
-                      className="w-24 border p-1 text-sm rounded"
-                    />
-                  </td>
-                  <td className="p-2 border text-center font-semibold">
-                    {COP.format(saldoPendiente)}
-                  </td>
-                  <td
-                    className={`p-2 border text-center font-medium ${
-                      sinDeuda ? "text-green-600" : "text-red-600"
-                    }`}
-                  >
-                    {sinDeuda ? "Sin deuda" : "Con deuda"}
-                  </td>
-                  <td
-                    className={`p-2 border text-center font-medium ${
-                      isCompleted ? "text-green-600" : "text-yellow-600"
-                    }`}
-                  >
-                    {isCompleted ? "Terminada" : "Pendiente"}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                    }}
+                    placeholder="$"
+                    className="w-24 border p-1 text-sm rounded"
+                  />
+                </p>
+                <p>
+                  <strong>Saldo Pendiente:</strong> {COP.format(saldoPendiente)}
+                </p>
+                <p className={sinDeuda ? "text-green-600" : "text-red-600"}>
+                  <strong>Deuda:</strong> {sinDeuda ? "Sin deuda" : "Con deuda"}
+                </p>
+                <p
+                  className={isCompleted ? "text-green-600" : "text-yellow-600"}
+                >
+                  <strong>Estado:</strong>{" "}
+                  {isCompleted ? "Terminada" : "Pendiente"}
+                </p>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -261,8 +248,8 @@ export default function FinanzasPage() {
           {notificacion}
         </div>
       )}
-      {renderTabla(pendientes, "Guarderías Pendientes")}
-      {renderTabla(terminadas, "Guarderías Terminadas")}
+      {renderTarjetas(pendientes, "Guarderías Pendientes")}
+      {renderTarjetas(terminadas, "Guarderías Terminadas")}
     </div>
   );
 }

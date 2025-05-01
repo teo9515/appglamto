@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
+import ClientSelect from "./ClientSelect"; // Asegúrate de tenerlo en la misma carpeta
 
 interface ModalFormGuarderiaProps {
   isOpen: boolean;
   onClose: () => void;
-  onGuarderiaCreated?: () => void; // <- para recargar lista
+  onGuarderiaCreated?: () => void;
 }
 
 type Client = {
@@ -23,7 +24,7 @@ export default function ModalFormGuarderia({
   onGuarderiaCreated,
 }: ModalFormGuarderiaProps) {
   const [clients, setClients] = useState<Client[]>([]);
-  const [selectedClientId, setSelectedClientId] = useState<string>("");
+  const [selectedClient, setSelectedClient] = useState<Client | null>(null);
   const [visits, setVisits] = useState<{ date: string }[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -60,7 +61,7 @@ export default function ModalFormGuarderia({
     setLoading(true);
     setError(null);
 
-    if (!selectedClientId || visits.length === 0) {
+    if (!selectedClient || visits.length === 0) {
       setError("Selecciona un cliente y al menos una visita");
       setLoading(false);
       return;
@@ -68,7 +69,7 @@ export default function ModalFormGuarderia({
 
     const { data: guarderia, error: insertError } = await supabase
       .from("guarderias")
-      .insert({ client_id: selectedClientId })
+      .insert({ client_id: selectedClient.id })
       .select()
       .single();
 
@@ -93,7 +94,6 @@ export default function ModalFormGuarderia({
       return;
     }
 
-    // ✅ Actualizar lista y cerrar modal
     onGuarderiaCreated?.();
     onClose();
     setLoading(false);
@@ -108,21 +108,14 @@ export default function ModalFormGuarderia({
 
         {error && <p className="text-red-600">{error}</p>}
 
-        <label className="block">
-          Cliente:
-          <select
-            value={selectedClientId}
-            onChange={(e) => setSelectedClientId(e.target.value)}
-            className="mt-1 p-2 border w-full rounded"
-          >
-            <option value="">Selecciona un cliente</option>
-            {clients.map((client) => (
-              <option key={client.id} value={client.id}>
-                {client.name}
-              </option>
-            ))}
-          </select>
-        </label>
+        <div>
+          <label className="block font-medium mb-1">Cliente:</label>
+          <ClientSelect
+            clients={clients}
+            selectedClient={selectedClient}
+            onChange={setSelectedClient}
+          />
+        </div>
 
         <div className="space-y-2">
           <p className="font-medium">Fechas:</p>
