@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <main className="flex flex-col  min-h-screen w-full  items-center justify-center  gap-2 md:gap-20">
+    <main className="flex flex-col  min-h-screen w-full  items-center justify-center space-y-4 gap-2 md:gap-20">
       <Image
         src="/glamto12.png"
         width={120}
@@ -16,7 +16,7 @@ export default function Home() {
           Panel Administrativo
         </h3>
       </div>
-      <div className="flex flex-col md:flex-row w-5/6 sm:w-5/6 gap-10 sm: justify-center ">
+      <div className="flex flex-col md:flex-row w-5/6 sm:w-5/6 gap-5 sm:gap-10 justify-center ">
         <CardAdmin
           title="Clientes"
           description="Administra la información de los clientes, crea, edita y visualiza sus datos."
