@@ -1,12 +1,17 @@
 import CardAdmin from "../components/CardAdmin";
+import Image from "next/image";
 
 export default function Home() {
   return (
-    <main className="flex flex-col  min-h-screen w-full  items-center justify-center  gap-6 md:gap-20">
+    <main className="flex flex-col  min-h-screen w-full  items-center justify-center  gap-2 md:gap-20">
+      <Image
+        src="/glamto12.png"
+        width={120}
+        quality={100}
+        height={120}
+        alt="cuidado para gatos"
+      />
       <div className=" w-5/6 space-y-10 ">
-        <h1 className="text-5xl lg:text-7xl font-bold text-[#163020] text-center">
-          Glamto
-        </h1>
         <h3 className="text-3xl font-semibold text-[#163020] lg:text-5xl text-center">
           Panel Administrativo
         </h3>

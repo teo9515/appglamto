@@ -181,17 +181,8 @@ export default function FinanzasPage() {
                   <strong>Valor por visita:</strong>{" "}
                   {COP.format(precioPorVisita)}
                 </p>
-                <p className="text-[#163020]">
+                <p className="text-green-700">
                   <strong>Total:</strong> {COP.format(total)}
-                </p>
-                <p className="text-[#163020]">
-                  <strong>10% Gasolina:</strong> {COP.format(gasolina)}
-                </p>
-                <p className="text-[#163020]">
-                  <strong>40% Cuidador:</strong> {COP.format(cuidador)}
-                </p>
-                <p className="text-[#163020]">
-                  <strong>50% Glamto:</strong> {COP.format(glamto)}
                 </p>
                 <p className="text-[#163020]">
                   <strong>Abono:</strong>
@@ -228,6 +219,15 @@ export default function FinanzasPage() {
 
                 <p className="text-[#163020]">
                   <strong>Saldo Pendiente:</strong> {COP.format(saldoPendiente)}
+                </p>
+                <p className="text-[#163020]">
+                  <strong>10% Gasolina:</strong> {COP.format(gasolina)}
+                </p>
+                <p className="text-[#163020]">
+                  <strong>40% Cuidador:</strong> {COP.format(cuidador)}
+                </p>
+                <p className="text-[#163020]">
+                  <strong>50% Glamto:</strong> {COP.format(glamto)}
                 </p>
                 <p className={sinDeuda ? "text-green-600" : "text-red-600"}>
                   <strong>Deuda:</strong> {sinDeuda ? "Sin deuda" : "Con deuda"}
