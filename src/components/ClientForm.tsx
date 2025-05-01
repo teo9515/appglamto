@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { Client, Cat } from "@/types";
 
 type ClientFormProps = {
-  client?: Client;
+  client?: Client | null;
   cats?: Cat[];
   isEditing?: boolean;
   onSuccess?: () => void;

@@ -22,7 +22,7 @@ export default function ClientCard({
   onDelete: (id: string) => void;
 }) {
   return (
-    <div className=" rounded-lg p-4 shadow-lg shadow-black bg-white">
+    <div className=" rounded-lg p-4 shadow-lg shadow-black bg-white ">
       <h2 className="text-xl font-bold text-[#163020]">{client.name}</h2>
       <p className="text-sm text-[#163020]">
         <strong>Dirección:</strong> {client.address || "No especificada"}

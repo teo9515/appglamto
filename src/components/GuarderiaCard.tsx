@@ -49,7 +49,7 @@ export default function GuarderiaCard({
   return (
     <div className="p-4 border rounded bg-white shadow space-y-2 transition-all duration-300">
       <div className="flex justify-between items-center">
-        <div>
+        <div className="w-2/4">
           <h2 className="text-lg font-semibold">
             {client?.name ?? "Sin nombre"}
           </h2>

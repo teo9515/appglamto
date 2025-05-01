@@ -141,7 +141,7 @@ export default function FinanzasPage() {
   const renderTarjetas = (lista: Guarderia[], titulo: string) => (
     <div className="mb-12">
       <h2 className="text-xl font-semibold mb-2">{titulo}</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 ">
         {lista.map((guarderia) => {
           const numGatos = guarderia.clients?.cats?.length || 0;
           const precioPorVisita = calcularPrecio(numGatos);
@@ -162,46 +162,56 @@ export default function FinanzasPage() {
           return (
             <div
               key={guarderia.id}
-              className="bg-white border rounded-lg shadow-md p-4"
+              className="rounded-lg p-4 shadow-lg shadow-black bg-white"
             >
-              <h3 className="font-bold text-lg">{guarderia.clients?.name}</h3>
-              <p className="text-sm text-gray-600">
+              <h3 className="text-xl font-bold text-[#163020]">
+                {guarderia.clients?.name}
+              </h3>
+              <p className="text-sm text-gray-700 font-semibold">
                 {guarderia.clients?.cats?.map((cat) => cat.name).join(", ")}
               </p>
               <div className="mt-4">
-                <p>
+                <p className="text-[#163020]">
                   <strong>Visitas:</strong> {visitas.length}
                 </p>
-                <p>
+                <p className="text-[#163020]">
                   <strong>Gatos:</strong> {numGatos}
                 </p>
-                <p>
+                <p className="text-[#163020]">
                   <strong>Valor por visita:</strong>{" "}
                   {COP.format(precioPorVisita)}
                 </p>
-                <p>
+                <p className="text-[#163020]">
                   <strong>Total:</strong> {COP.format(total)}
                 </p>
-                <p>
+                <p className="text-[#163020]">
                   <strong>10% Gasolina:</strong> {COP.format(gasolina)}
                 </p>
-                <p>
+                <p className="text-[#163020]">
                   <strong>40% Cuidador:</strong> {COP.format(cuidador)}
                 </p>
-                <p>
+                <p className="text-[#163020]">
                   <strong>50% Glamto:</strong> {COP.format(glamto)}
                 </p>
-                <p>
+                <p className="text-[#163020]">
                   <strong>Abono:</strong>
                   <input
                     type="number"
-                    value={nuevoAbonos[guarderia.id] || ""}
-                    onChange={(e) =>
+                    value={
+                      nuevoAbonos[guarderia.id]
+                        ? new Intl.NumberFormat("es-CO").format(
+                            nuevoAbonos[guarderia.id]
+                          )
+                        : ""
+                    }
+                    onChange={(e) => {
+                      // Remover cualquier separador de miles y convertir a número
+                      const rawValue = e.target.value.replace(/\D/g, "");
                       setNuevoAbonos((prev) => ({
                         ...prev,
-                        [guarderia.id]: Number(e.target.value),
-                      }))
-                    }
+                        [guarderia.id]: Number(rawValue),
+                      }));
+                    }}
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
                         e.preventDefault();
@@ -215,7 +225,8 @@ export default function FinanzasPage() {
                     className="w-24 border p-1 text-sm rounded"
                   />
                 </p>
-                <p>
+
+                <p className="text-[#163020]">
                   <strong>Saldo Pendiente:</strong> {COP.format(saldoPendiente)}
                 </p>
                 <p className={sinDeuda ? "text-green-600" : "text-red-600"}>
@@ -236,12 +247,25 @@ export default function FinanzasPage() {
   );
 
   return (
-    <div className="max-w-7xl mx-auto p-6">
-      <div className="flex">
-        <h1 className="text-2xl font-bold mb-6">Resumen financiero</h1>
-        <Link href="/" className="btn-primary flex justify-center items-center">
-          <button>Home</button>
-        </Link>
+    <div className="max-w-4xl py-10 mx-auto p-4 space-y-8 md:space-y-8">
+      <div className="flex flex-wrap gap-5 items-center justify-center space-y-5">
+        <h1 className="text-5xl font-bold text-[#163020] text-center">
+          Resumen financiero
+        </h1>
+        <div className="w-full  flex flex-col sm:flex-row  items-center space-y-4 sm:space-y-0 sm:space-x-5 mb-5 md:mb-3">
+          <Link
+            href="/"
+            className="btn-primary flex justify-center items-center"
+          >
+            <button>Home</button>
+          </Link>
+          <Link
+            href="/"
+            className="btn-secondary flex justify-center items-center"
+          >
+            <button className="cursor-pointer">Guarderías</button>
+          </Link>
+        </div>
       </div>
       {notificacion && (
         <div className="mb-4 p-3 bg-green-100 border border-green-300 text-green-800 rounded">

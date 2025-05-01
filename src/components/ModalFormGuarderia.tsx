@@ -103,8 +103,10 @@ export default function ModalFormGuarderia({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded-xl w-full max-w-md space-y-4">
-        <h2 className="text-xl font-bold">Nueva guardería</h2>
+      <div className="bg-white p-6 rounded-xl w-5/6 md:w-full max-w-md space-y-6">
+        <h2 className="text-2xl font-bold text-[#163020] text-center">
+          Nueva guardería
+        </h2>
 
         {error && <p className="text-red-600">{error}</p>}
 

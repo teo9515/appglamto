@@ -38,7 +38,10 @@ export default function Clients() {
 
   useEffect(() => {
     const fetchClients = async () => {
-      const { data, error } = await supabase.from("clients").select(`
+      const { data, error } = await supabase
+        .from("clients")
+        .select(
+          `
         id,
         name,
         phone,
@@ -50,7 +53,9 @@ export default function Clients() {
           age,
           medical_condition
         )
-      `);
+      `
+        )
+        .order("created_at", { ascending: false }); // 👈 ordena por más reciente
 
       if (error) setError(error.message);
       else {
@@ -128,7 +133,7 @@ export default function Clients() {
           placeholder="Buscar por nombre..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full md:w-1/2 p-2  shadow-md shadow-black rounded-md "
+          className="w-5/6 md:w-1/2 p-2 font-semibold shadow-md shadow-black rounded-md "
         />
       </div>
 
