@@ -1,3 +1,5 @@
+"use client";
+
 import CardAdmin from "../components/CardAdmin";
 import Image from "next/image";
 

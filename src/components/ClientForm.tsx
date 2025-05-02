@@ -31,7 +31,7 @@ export default function ClientForm({
   });
 
   const [cats, setCats] = useState<Cat[]>([
-    { name: "", age: "", medical_condition: "" },
+    { name: "", age: "", medical_condition: "Ninguna" },
   ]);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function ClientForm({
       setCats(
         initialCats?.length
           ? initialCats
-          : [{ name: "", age: "", medical_condition: "" }]
+          : [{ name: "", age: "", medical_condition: "Ninguna" }]
       );
     }
   }, [isEditing, initialClient, initialCats]);
@@ -61,7 +61,10 @@ export default function ClientForm({
   };
 
   const addCat = useCallback(() => {
-    setCats((prev) => [...prev, { name: "", age: "", medical_condition: "" }]);
+    setCats((prev) => [
+      ...prev,
+      { name: "", age: "", medical_condition: "Ninguna" },
+    ]);
   }, []);
 
   const removeCat = (index: number) => {
@@ -219,11 +222,13 @@ export default function ClientForm({
             required
           />
           <input
+            type="number"
             name="age"
             placeholder="Edad del gato"
             value={cat.age}
             onChange={(e) => handleCatChange(index, e)}
             className="w-full p-2 border rounded"
+            min="0"
           />
           <input
             name="medical_condition"
@@ -252,7 +257,7 @@ export default function ClientForm({
         + Añadir otro gato
       </button>
 
-      <div className="text-center">
+      <div className="text-center space-x-4 mt-4">
         <button type="submit" className="btn-primary">
           {isEditing ? "Actualizar Cliente" : "Guardar cliente y gatos"}
         </button>
