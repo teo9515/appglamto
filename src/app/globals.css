@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@layer components {
+    .btn-primary {
+      @apply  bg-[#AEBD77] font-medium text-black  w-full h-12 max-w-72 text-xl hover:border-white hover:cursor-pointer hover:text-white hover:bg-[#163020] rounded-lg shadow-black shadow-[7.0px_7.0px_8.0px_rgba(0,0,0,0.38)];
+    }
+    .btn-secondary {
+      @apply  bg-[#163020]  font-medium text-white  w-full h-12 max-w-72  text-xl hover:border-white hover:text-black hover:cursor-pointer hover:bg-[#AEBD77] rounded-lg shadow-black shadow-[7.0px_7.0px_8.0px_rgba(0,0,0,0.38)]
+    }
+    
+  }
+
+  body {
+    @apply bg-[#F7F7F7];
+  }
